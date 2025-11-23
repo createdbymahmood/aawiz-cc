@@ -11,7 +11,6 @@ import * as React from 'react'
 import {toast} from 'sonner'
 
 import {AppLayout} from '@/components/shared/layout/app-layout'
-import {NProgress} from '@/components/ui/nprogress'
 import {Toaster} from '@/components/ui/sonner'
 import {toClientErrorMessage} from '@/lib/to-client-error-message'
 
@@ -60,7 +59,6 @@ export const AppProviders = React.memo(({children}: AppProvidersProps) => {
     <NextThemesProvider attribute='class' disableTransitionOnChange>
       <React.Suspense>
         <NuqsAdapter>
-          <NProgress />
           <Toaster />
           <ReactQueryProviders>
             <AppLayout>{children}</AppLayout>
