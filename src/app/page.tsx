@@ -1,19 +1,32 @@
-'use client'
+import type {Metadata} from 'next'
 
-import React from 'react'
+import {HomePage} from '@/components/home'
 
-import {ServiceRequestDialogButtonWrapper} from '@/components/service-request/service-request-dialog'
-import {ThemeSwitch} from '@/components/shared/theme-switch'
-import {Button} from '@/components/ui/button'
-
-export default function Home() {
-  return (
-    <div className='flex flex-row gap-2'>
-      <ThemeSwitch />
-
-    <ServiceRequestDialogButtonWrapper>
-      <Button>Form With Validation</Button>
-    </ServiceRequestDialogButtonWrapper>
-    </div>
-  )
+export const metadata: Metadata = {
+  title: 'Home',
+  /* Write down some dummy meta data */
+  description: 'Home page',
+  keywords: [
+    'home',
+    'page',
+    'dummy',
+    'meta',
+    'data',
+    'next.js',
+    'react',
+    'shadcn',
+    'ui',
+    'tailwind',
+    'typescript',
+  ],
+  authors: [
+    {name: 'Mahmood Bagheri', url: 'https://github.com/createdbymahmood'},
+  ],
+  openGraph: {
+    title: 'Home',
+    description: 'Home page',
+    url: 'https://example.com',
+  },
 }
+
+export default HomePage
