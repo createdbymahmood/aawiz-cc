@@ -8,7 +8,7 @@ import {UsersList} from './users-list'
 
 export const HomePage = () => {
   return (
-    <div className='flex flex-col gap-2 items-start'>
+    <div className='flex flex-col gap-5 items-start'>
       <ServiceRequestDialogButtonWrapper>
         <Button>Form With Validation</Button>
       </ServiceRequestDialogButtonWrapper>
