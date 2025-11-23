@@ -1,0 +1,1536 @@
+openapi: 3.0.0
+info:
+  title: JSONPlaceholder API
+  description: Free fake REST API for testing and prototyping
+  version: 1.0.0
+  contact:
+    name: JSONPlaceholder
+    url: https://jsonplaceholder.typicode.com
+servers:
+  - url: https://jsonplaceholder.typicode.com
+    description: JSONPlaceholder API Server
+
+tags:
+  - name: posts
+    description: Operations about posts
+  - name: comments
+    description: Operations about comments
+  - name: albums
+    description: Operations about albums
+  - name: photos
+    description: Operations about photos
+  - name: todos
+    description: Operations about todos
+  - name: users
+    description: Operations about users
+
+paths:
+  /posts:
+    get:
+      tags:
+        - posts
+      summary: Get all posts
+      description: Returns a list of posts
+      operationId: getPosts
+      parameters:
+        - name: userId
+          in: query
+          description: Filter posts by user ID
+          required: false
+          schema:
+            type: integer
+        - name: _limit
+          in: query
+          description: Limit the number of results
+          required: false
+          schema:
+            type: integer
+        - name: _page
+          in: query
+          description: Page number for pagination
+          required: false
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Post"
+    post:
+      tags:
+        - posts
+      summary: Create a new post
+      description: Creates a new post
+      operationId: createPost
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PostInput"
+      responses:
+        "201":
+          description: Post created successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Post"
+
+  /posts/{id}:
+    get:
+      tags:
+        - posts
+      summary: Get a post by ID
+      description: Returns a single post
+      operationId: getPostById
+      parameters:
+        - name: id
+          in: path
+          description: Post ID
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Post"
+        "404":
+          description: Post not found
+    put:
+      tags:
+        - posts
+      summary: Update a post
+      description: Updates an existing post (replaces all fields)
+      operationId: updatePost
+      parameters:
+        - name: id
+          in: path
+          description: Post ID
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PostInput"
+      responses:
+        "200":
+          description: Post updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Post"
+    patch:
+      tags:
+        - posts
+      summary: Partially update a post
+      description: Updates specific fields of an existing post
+      operationId: patchPost
+      parameters:
+        - name: id
+          in: path
+          description: Post ID
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PostPatch"
+      responses:
+        "200":
+          description: Post updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Post"
+    delete:
+      tags:
+        - posts
+      summary: Delete a post
+      description: Deletes a post
+      operationId: deletePost
+      parameters:
+        - name: id
+          in: path
+          description: Post ID
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Post deleted successfully
+
+  /posts/{id}/comments:
+    get:
+      tags:
+        - posts
+        - comments
+      summary: Get comments for a post
+      description: Returns all comments for a specific post
+      operationId: getPostComments
+      parameters:
+        - name: id
+          in: path
+          description: Post ID
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Comment"
+
+  /comments:
+    get:
+      tags:
+        - comments
+      summary: Get all comments
+      description: Returns a list of comments
+      operationId: getComments
+      parameters:
+        - name: postId
+          in: query
+          description: Filter comments by post ID
+          required: false
+          schema:
+            type: integer
+        - name: _limit
+          in: query
+          description: Limit the number of results
+          required: false
+          schema:
+            type: integer
+        - name: _page
+          in: query
+          description: Page number for pagination
+          required: false
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Comment"
+    post:
+      tags:
+        - comments
+      summary: Create a new comment
+      description: Creates a new comment
+      operationId: createComment
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CommentInput"
+      responses:
+        "201":
+          description: Comment created successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Comment"
+
+  /comments/{id}:
+    get:
+      tags:
+        - comments
+      summary: Get a comment by ID
+      description: Returns a single comment
+      operationId: getCommentById
+      parameters:
+        - name: id
+          in: path
+          description: Comment ID
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Comment"
+        "404":
+          description: Comment not found
+    put:
+      tags:
+        - comments
+      summary: Update a comment
+      description: Updates an existing comment (replaces all fields)
+      operationId: updateComment
+      parameters:
+        - name: id
+          in: path
+          description: Comment ID
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CommentInput"
+      responses:
+        "200":
+          description: Comment updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Comment"
+    patch:
+      tags:
+        - comments
+      summary: Partially update a comment
+      description: Updates specific fields of an existing comment
+      operationId: patchComment
+      parameters:
+        - name: id
+          in: path
+          description: Comment ID
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CommentPatch"
+      responses:
+        "200":
+          description: Comment updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Comment"
+    delete:
+      tags:
+        - comments
+      summary: Delete a comment
+      description: Deletes a comment
+      operationId: deleteComment
+      parameters:
+        - name: id
+          in: path
+          description: Comment ID
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Comment deleted successfully
+
+  /albums:
+    get:
+      tags:
+        - albums
+      summary: Get all albums
+      description: Returns a list of albums
+      operationId: getAlbums
+      parameters:
+        - name: userId
+          in: query
+          description: Filter albums by user ID
+          required: false
+          schema:
+            type: integer
+        - name: _limit
+          in: query
+          description: Limit the number of results
+          required: false
+          schema:
+            type: integer
+        - name: _page
+          in: query
+          description: Page number for pagination
+          required: false
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Album"
+    post:
+      tags:
+        - albums
+      summary: Create a new album
+      description: Creates a new album
+      operationId: createAlbum
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AlbumInput"
+      responses:
+        "201":
+          description: Album created successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Album"
+
+  /albums/{id}:
+    get:
+      tags:
+        - albums
+      summary: Get an album by ID
+      description: Returns a single album
+      operationId: getAlbumById
+      parameters:
+        - name: id
+          in: path
+          description: Album ID
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Album"
+        "404":
+          description: Album not found
+    put:
+      tags:
+        - albums
+      summary: Update an album
+      description: Updates an existing album (replaces all fields)
+      operationId: updateAlbum
+      parameters:
+        - name: id
+          in: path
+          description: Album ID
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AlbumInput"
+      responses:
+        "200":
+          description: Album updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Album"
+    patch:
+      tags:
+        - albums
+      summary: Partially update an album
+      description: Updates specific fields of an existing album
+      operationId: patchAlbum
+      parameters:
+        - name: id
+          in: path
+          description: Album ID
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AlbumPatch"
+      responses:
+        "200":
+          description: Album updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Album"
+    delete:
+      tags:
+        - albums
+      summary: Delete an album
+      description: Deletes an album
+      operationId: deleteAlbum
+      parameters:
+        - name: id
+          in: path
+          description: Album ID
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Album deleted successfully
+
+  /albums/{id}/photos:
+    get:
+      tags:
+        - albums
+        - photos
+      summary: Get photos for an album
+      description: Returns all photos for a specific album
+      operationId: getAlbumPhotos
+      parameters:
+        - name: id
+          in: path
+          description: Album ID
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Photo"
+
+  /photos:
+    get:
+      tags:
+        - photos
+      summary: Get all photos
+      description: Returns a list of photos
+      operationId: getPhotos
+      parameters:
+        - name: albumId
+          in: query
+          description: Filter photos by album ID
+          required: false
+          schema:
+            type: integer
+        - name: _limit
+          in: query
+          description: Limit the number of results
+          required: false
+          schema:
+            type: integer
+        - name: _page
+          in: query
+          description: Page number for pagination
+          required: false
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Photo"
+    post:
+      tags:
+        - photos
+      summary: Create a new photo
+      description: Creates a new photo
+      operationId: createPhoto
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PhotoInput"
+      responses:
+        "201":
+          description: Photo created successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Photo"
+
+  /photos/{id}:
+    get:
+      tags:
+        - photos
+      summary: Get a photo by ID
+      description: Returns a single photo
+      operationId: getPhotoById
+      parameters:
+        - name: id
+          in: path
+          description: Photo ID
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Photo"
+        "404":
+          description: Photo not found
+    put:
+      tags:
+        - photos
+      summary: Update a photo
+      description: Updates an existing photo (replaces all fields)
+      operationId: updatePhoto
+      parameters:
+        - name: id
+          in: path
+          description: Photo ID
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PhotoInput"
+      responses:
+        "200":
+          description: Photo updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Photo"
+    patch:
+      tags:
+        - photos
+      summary: Partially update a photo
+      description: Updates specific fields of an existing photo
+      operationId: patchPhoto
+      parameters:
+        - name: id
+          in: path
+          description: Photo ID
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PhotoPatch"
+      responses:
+        "200":
+          description: Photo updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Photo"
+    delete:
+      tags:
+        - photos
+      summary: Delete a photo
+      description: Deletes a photo
+      operationId: deletePhoto
+      parameters:
+        - name: id
+          in: path
+          description: Photo ID
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Photo deleted successfully
+
+  /todos:
+    get:
+      tags:
+        - todos
+      summary: Get all todos
+      description: Returns a list of todos
+      operationId: getTodos
+      parameters:
+        - name: userId
+          in: query
+          description: Filter todos by user ID
+          required: false
+          schema:
+            type: integer
+        - name: _limit
+          in: query
+          description: Limit the number of results
+          required: false
+          schema:
+            type: integer
+        - name: _page
+          in: query
+          description: Page number for pagination
+          required: false
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Todo"
+    post:
+      tags:
+        - todos
+      summary: Create a new todo
+      description: Creates a new todo
+      operationId: createTodo
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TodoInput"
+      responses:
+        "201":
+          description: Todo created successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Todo"
+
+  /todos/{id}:
+    get:
+      tags:
+        - todos
+      summary: Get a todo by ID
+      description: Returns a single todo
+      operationId: getTodoById
+      parameters:
+        - name: id
+          in: path
+          description: Todo ID
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Todo"
+        "404":
+          description: Todo not found
+    put:
+      tags:
+        - todos
+      summary: Update a todo
+      description: Updates an existing todo (replaces all fields)
+      operationId: updateTodo
+      parameters:
+        - name: id
+          in: path
+          description: Todo ID
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TodoInput"
+      responses:
+        "200":
+          description: Todo updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Todo"
+    patch:
+      tags:
+        - todos
+      summary: Partially update a todo
+      description: Updates specific fields of an existing todo
+      operationId: patchTodo
+      parameters:
+        - name: id
+          in: path
+          description: Todo ID
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TodoPatch"
+      responses:
+        "200":
+          description: Todo updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Todo"
+    delete:
+      tags:
+        - todos
+      summary: Delete a todo
+      description: Deletes a todo
+      operationId: deleteTodo
+      parameters:
+        - name: id
+          in: path
+          description: Todo ID
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Todo deleted successfully
+
+  /users:
+    get:
+      tags:
+        - users
+      summary: Get all users
+      description: Returns a list of users
+      operationId: getUsers
+      parameters:
+        - name: _limit
+          in: query
+          description: Limit the number of results
+          required: false
+          schema:
+            type: integer
+        - name: _page
+          in: query
+          description: Page number for pagination
+          required: false
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/User"
+    post:
+      tags:
+        - users
+      summary: Create a new user
+      description: Creates a new user
+      operationId: createUser
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserInput"
+      responses:
+        "201":
+          description: User created successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+
+  /users/{id}:
+    get:
+      tags:
+        - users
+      summary: Get a user by ID
+      description: Returns a single user
+      operationId: getUserById
+      parameters:
+        - name: id
+          in: path
+          description: User ID
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+        "404":
+          description: User not found
+    put:
+      tags:
+        - users
+      summary: Update a user
+      description: Updates an existing user (replaces all fields)
+      operationId: updateUser
+      parameters:
+        - name: id
+          in: path
+          description: User ID
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserInput"
+      responses:
+        "200":
+          description: User updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+    patch:
+      tags:
+        - users
+      summary: Partially update a user
+      description: Updates specific fields of an existing user
+      operationId: patchUser
+      parameters:
+        - name: id
+          in: path
+          description: User ID
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserPatch"
+      responses:
+        "200":
+          description: User updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+    delete:
+      tags:
+        - users
+      summary: Delete a user
+      description: Deletes a user
+      operationId: deleteUser
+      parameters:
+        - name: id
+          in: path
+          description: User ID
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: User deleted successfully
+
+  /users/{id}/posts:
+    get:
+      tags:
+        - users
+        - posts
+      summary: Get posts for a user
+      description: Returns all posts for a specific user
+      operationId: getUserPosts
+      parameters:
+        - name: id
+          in: path
+          description: User ID
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Post"
+
+  /users/{id}/albums:
+    get:
+      tags:
+        - users
+        - albums
+      summary: Get albums for a user
+      description: Returns all albums for a specific user
+      operationId: getUserAlbums
+      parameters:
+        - name: id
+          in: path
+          description: User ID
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Album"
+
+  /users/{id}/todos:
+    get:
+      tags:
+        - users
+        - todos
+      summary: Get todos for a user
+      description: Returns all todos for a specific user
+      operationId: getUserTodos
+      parameters:
+        - name: id
+          in: path
+          description: User ID
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Todo"
+
+components:
+  schemas:
+    Post:
+      type: object
+      required:
+        - id
+        - userId
+        - title
+        - body
+      properties:
+        id:
+          type: integer
+          description: Post ID
+          example: 1
+        userId:
+          type: integer
+          description: User ID who created the post
+          example: 1
+        title:
+          type: string
+          description: Post title
+          example: "sunt aut facere repellat provident occaecati excepturi optio reprehenderit"
+        body:
+          type: string
+          description: Post content
+          example: "quia et suscipit\nsuscipit recusandae consequuntur expedita et cum\nreprehenderit molestiae ut ut quas totam\nnostrum rerum est autem sunt rem eveniet architecto"
+
+    PostInput:
+      type: object
+      required:
+        - userId
+        - title
+        - body
+      properties:
+        userId:
+          type: integer
+          description: User ID who is creating the post
+          example: 1
+        title:
+          type: string
+          description: Post title
+          example: "My new post"
+        body:
+          type: string
+          description: Post content
+          example: "This is the content of my post"
+
+    PostPatch:
+      type: object
+      properties:
+        userId:
+          type: integer
+          description: User ID who created the post
+        title:
+          type: string
+          description: Post title
+        body:
+          type: string
+          description: Post content
+
+    Comment:
+      type: object
+      required:
+        - id
+        - postId
+        - name
+        - email
+        - body
+      properties:
+        id:
+          type: integer
+          description: Comment ID
+          example: 1
+        postId:
+          type: integer
+          description: Post ID this comment belongs to
+          example: 1
+        name:
+          type: string
+          description: Comment name/title
+          example: "id labore ex et quam laborum"
+        email:
+          type: string
+          format: email
+          description: Email of the commenter
+          example: "Eliseo@gardner.biz"
+        body:
+          type: string
+          description: Comment content
+          example: "laudantium enim quasi est quidem magnam voluptate ipsam eos\ntempora quo necessitatibus\ndolor quam autem quasi\nreiciendis et nam sapiente accusantium"
+
+    CommentInput:
+      type: object
+      required:
+        - postId
+        - name
+        - email
+        - body
+      properties:
+        postId:
+          type: integer
+          description: Post ID this comment belongs to
+          example: 1
+        name:
+          type: string
+          description: Comment name/title
+          example: "Great post!"
+        email:
+          type: string
+          format: email
+          description: Email of the commenter
+          example: "user@example.com"
+        body:
+          type: string
+          description: Comment content
+          example: "This is a great post, thank you for sharing!"
+
+    CommentPatch:
+      type: object
+      properties:
+        postId:
+          type: integer
+          description: Post ID this comment belongs to
+        name:
+          type: string
+          description: Comment name/title
+        email:
+          type: string
+          format: email
+          description: Email of the commenter
+        body:
+          type: string
+          description: Comment content
+
+    Album:
+      type: object
+      required:
+        - id
+        - userId
+        - title
+      properties:
+        id:
+          type: integer
+          description: Album ID
+          example: 1
+        userId:
+          type: integer
+          description: User ID who created the album
+          example: 1
+        title:
+          type: string
+          description: Album title
+          example: "quidem molestiae enim"
+
+    AlbumInput:
+      type: object
+      required:
+        - userId
+        - title
+      properties:
+        userId:
+          type: integer
+          description: User ID who is creating the album
+          example: 1
+        title:
+          type: string
+          description: Album title
+          example: "My new album"
+
+    AlbumPatch:
+      type: object
+      properties:
+        userId:
+          type: integer
+          description: User ID who created the album
+        title:
+          type: string
+          description: Album title
+
+    Photo:
+      type: object
+      required:
+        - id
+        - albumId
+        - title
+        - url
+        - thumbnailUrl
+      properties:
+        id:
+          type: integer
+          description: Photo ID
+          example: 1
+        albumId:
+          type: integer
+          description: Album ID this photo belongs to
+          example: 1
+        title:
+          type: string
+          description: Photo title
+          example: "accusamus beatae ad facilis cum similique qui sunt"
+        url:
+          type: string
+          format: uri
+          description: Full size photo URL
+          example: "https://via.placeholder.com/600/92c952"
+        thumbnailUrl:
+          type: string
+          format: uri
+          description: Thumbnail photo URL
+          example: "https://via.placeholder.com/150/92c952"
+
+    PhotoInput:
+      type: object
+      required:
+        - albumId
+        - title
+        - url
+        - thumbnailUrl
+      properties:
+        albumId:
+          type: integer
+          description: Album ID this photo belongs to
+          example: 1
+        title:
+          type: string
+          description: Photo title
+          example: "My new photo"
+        url:
+          type: string
+          format: uri
+          description: Full size photo URL
+          example: "https://via.placeholder.com/600/photo"
+        thumbnailUrl:
+          type: string
+          format: uri
+          description: Thumbnail photo URL
+          example: "https://via.placeholder.com/150/photo"
+
+    PhotoPatch:
+      type: object
+      properties:
+        albumId:
+          type: integer
+          description: Album ID this photo belongs to
+        title:
+          type: string
+          description: Photo title
+        url:
+          type: string
+          format: uri
+          description: Full size photo URL
+        thumbnailUrl:
+          type: string
+          format: uri
+          description: Thumbnail photo URL
+
+    Todo:
+      type: object
+      required:
+        - id
+        - userId
+        - title
+        - completed
+      properties:
+        id:
+          type: integer
+          description: Todo ID
+          example: 1
+        userId:
+          type: integer
+          description: User ID who created the todo
+          example: 1
+        title:
+          type: string
+          description: Todo title
+          example: "delectus aut autem"
+        completed:
+          type: boolean
+          description: Whether the todo is completed
+          example: false
+
+    TodoInput:
+      type: object
+      required:
+        - userId
+        - title
+        - completed
+      properties:
+        userId:
+          type: integer
+          description: User ID who is creating the todo
+          example: 1
+        title:
+          type: string
+          description: Todo title
+          example: "Buy groceries"
+        completed:
+          type: boolean
+          description: Whether the todo is completed
+          example: false
+
+    TodoPatch:
+      type: object
+      properties:
+        userId:
+          type: integer
+          description: User ID who created the todo
+        title:
+          type: string
+          description: Todo title
+        completed:
+          type: boolean
+          description: Whether the todo is completed
+
+    User:
+      type: object
+      required:
+        - id
+        - name
+        - username
+        - email
+      properties:
+        id:
+          type: integer
+          description: User ID
+          example: 1
+        name:
+          type: string
+          description: User's full name
+          example: "Leanne Graham"
+        username:
+          type: string
+          description: Username
+          example: "Bret"
+        email:
+          type: string
+          format: email
+          description: User's email
+          example: "Sincere@april.biz"
+        address:
+          $ref: "#/components/schemas/Address"
+        phone:
+          type: string
+          description: User's phone number
+          example: "1-770-736-8031 x56442"
+        website:
+          type: string
+          description: User's website
+          example: "hildegard.org"
+        company:
+          $ref: "#/components/schemas/Company"
+
+    UserInput:
+      type: object
+      required:
+        - name
+        - username
+        - email
+      properties:
+        name:
+          type: string
+          description: User's full name
+          example: "John Doe"
+        username:
+          type: string
+          description: Username
+          example: "johndoe"
+        email:
+          type: string
+          format: email
+          description: User's email
+          example: "john@example.com"
+        address:
+          $ref: "#/components/schemas/AddressInput"
+        phone:
+          type: string
+          description: User's phone number
+          example: "1-234-567-8900"
+        website:
+          type: string
+          description: User's website
+          example: "johndoe.com"
+        company:
+          $ref: "#/components/schemas/CompanyInput"
+
+    UserPatch:
+      type: object
+      properties:
+        name:
+          type: string
+          description: User's full name
+        username:
+          type: string
+          description: Username
+        email:
+          type: string
+          format: email
+          description: User's email
+        address:
+          $ref: "#/components/schemas/AddressInput"
+        phone:
+          type: string
+          description: User's phone number
+        website:
+          type: string
+          description: User's website
+        company:
+          $ref: "#/components/schemas/CompanyInput"
+
+    Address:
+      type: object
+      properties:
+        street:
+          type: string
+          description: Street address
+          example: "Kulas Light"
+        suite:
+          type: string
+          description: Suite/Apartment number
+          example: "Apt. 556"
+        city:
+          type: string
+          description: City
+          example: "Gwenborough"
+        zipcode:
+          type: string
+          description: Zip/Postal code
+          example: "92998-3874"
+        geo:
+          $ref: "#/components/schemas/Geo"
+
+    AddressInput:
+      type: object
+      properties:
+        street:
+          type: string
+          description: Street address
+          example: "123 Main St"
+        suite:
+          type: string
+          description: Suite/Apartment number
+          example: "Apt. 4B"
+        city:
+          type: string
+          description: City
+          example: "New York"
+        zipcode:
+          type: string
+          description: Zip/Postal code
+          example: "10001"
+        geo:
+          $ref: "#/components/schemas/GeoInput"
+
+    Geo:
+      type: object
+      properties:
+        lat:
+          type: string
+          description: Latitude
+          example: "-37.3159"
+        lng:
+          type: string
+          description: Longitude
+          example: "81.1496"
+
+    GeoInput:
+      type: object
+      properties:
+        lat:
+          type: string
+          description: Latitude
+          example: "40.7128"
+        lng:
+          type: string
+          description: Longitude
+          example: "-74.0060"
+
+    Company:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Company name
+          example: "Romaguera-Crona"
+        catchPhrase:
+          type: string
+          description: Company catch phrase
+          example: "Multi-layered client-server neural-net"
+        bs:
+          type: string
+          description: Company business statement
+          example: "harness real-time e-markets"
+
+    CompanyInput:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Company name
+          example: "Acme Corp"
+        catchPhrase:
+          type: string
+          description: Company catch phrase
+          example: "Innovative solutions for tomorrow"
+        bs:
+          type: string
+          description: Company business statement
+          example: "deliver cutting-edge technologies"
