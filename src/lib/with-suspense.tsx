@@ -4,10 +4,11 @@ import {Pending} from '@/components/shared/pending'
 
 export const withSuspense = <T extends Record<string, unknown>>(
   Component: React.ComponentType<T>,
+  fallback: React.ReactNode = <Pending />,
 ) => {
   return (props: T) => {
     return (
-      <Suspense fallback={<Pending />}>
+      <Suspense fallback={fallback}>
         <Component {...props} />
       </Suspense>
     )

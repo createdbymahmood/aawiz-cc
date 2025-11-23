@@ -84,4 +84,4 @@ function ServiceRequestDialogImpl() {
     </Dialog>
   )
 }
-export const ServiceRequestDialog = withSuspense(ServiceRequestDialogImpl)
+export const ServiceRequestDialog = withSuspense(ServiceRequestDialogImpl, null)
