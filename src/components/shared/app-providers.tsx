@@ -57,11 +57,7 @@ export interface AppProvidersProps {
 
 export const AppProviders = React.memo(({children}: AppProvidersProps) => {
   return (
-    <NextThemesProvider
-      attribute='class'
-      defaultTheme='light'
-      disableTransitionOnChange
-    >
+    <NextThemesProvider attribute='class' disableTransitionOnChange>
       <React.Suspense>
         <NuqsAdapter>
           <NProgress />
