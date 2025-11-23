@@ -10,11 +10,10 @@ import {NuqsAdapter} from 'nuqs/adapters/next/app'
 import * as React from 'react'
 import {toast} from 'sonner'
 
+import {AppLayout} from '@/components/shared/layout/app-layout'
 import {NProgress} from '@/components/ui/nprogress'
 import {Toaster} from '@/components/ui/sonner'
 import {toClientErrorMessage} from '@/lib/to-client-error-message'
-
-import {AppLayout} from './app-layout'
 
 function makeQueryClient() {
   return new QueryClient({
