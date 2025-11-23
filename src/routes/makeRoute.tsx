@@ -1,12 +1,12 @@
 /* eslint-disable */
 
+import Link from 'next/link'
 import queryString from 'query-string'
 import {z} from 'zod'
 
 /*
 Derived from: https://www.flightcontrol.dev/blog/fix-nextjs-routing-to-have-full-type-safety
 */
-import {Link} from '@/components/ui/link'
 
 type LinkProps = Parameters<typeof Link>[0]
 
