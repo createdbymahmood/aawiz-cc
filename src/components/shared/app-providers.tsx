@@ -1,6 +1,7 @@
 'use client'
 
 import '@/styles/globals.css'
+
 import {isServer, QueryClient, QueryClientProvider} from '@tanstack/react-query'
 import {ReactQueryStreamedHydration} from '@tanstack/react-query-next-experimental'
 import {capitalize} from 'lodash-es'
@@ -12,6 +13,8 @@ import {toast} from 'sonner'
 import {NProgress} from '@/components/ui/nprogress'
 import {Toaster} from '@/components/ui/sonner'
 import {toClientErrorMessage} from '@/lib/to-client-error-message'
+
+import {AppLayout} from './app-layout'
 
 function makeQueryClient() {
   return new QueryClient({
@@ -64,7 +67,9 @@ export const AppProviders = React.memo(({children}: AppProvidersProps) => {
         <NuqsAdapter>
           <NProgress />
           <Toaster />
-          <ReactQueryProviders>{children}</ReactQueryProviders>
+          <ReactQueryProviders>
+            <AppLayout>{children}</AppLayout>
+          </ReactQueryProviders>
         </NuqsAdapter>
       </React.Suspense>
     </NextThemesProvider>

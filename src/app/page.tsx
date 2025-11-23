@@ -2,9 +2,13 @@
 
 import React from 'react'
 
-import {useGetTodosSuspense} from '@/data-provider/api/todos'
+import {ServiceRequestDialogButtonWrapper} from '@/components/service-request/service-request-dialog'
+import {Button} from '@/components/ui/button'
 
 export default function Home() {
-  const {data} = useGetTodosSuspense()
-  return <pre className='text-xs'>{JSON.stringify(data, null, 2)}</pre>
+  return (
+    <ServiceRequestDialogButtonWrapper>
+      <Button>Form With Validation</Button>
+    </ServiceRequestDialogButtonWrapper>
+  )
 }
