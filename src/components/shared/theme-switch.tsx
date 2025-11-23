@@ -21,7 +21,8 @@ export const ThemeSwitch = () => {
           <Paintbrush />
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className='min-w-32'>
+
+      <DropdownMenuContent align='start' className='min-w-32' side='bottom'>
         <DropdownMenuItem onClick={() => setTheme('light')}>
           <SunIcon size={16} aria-hidden='true' className='opacity-60' />
           <span>Light</span>
