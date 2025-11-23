@@ -5,7 +5,13 @@ import type {JSX} from 'react'
 import {parseAsBoolean, useQueryState} from 'nuqs'
 import React, {Suspense} from 'react'
 
-import {Dialog, DialogContent} from '@/components/ui/dialog'
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog'
 import {cn} from '@/lib/utils'
 
 import {ServiceRequest} from './service-request'
@@ -56,24 +62,23 @@ export function ServiceRequestDialog() {
         onWheel={(e) => e.stopPropagation()}
         className={cn(
           `
-          sm:w-[1139px]
+          sm:w-lg
           w-full
-          md:max-h-[816px]
-          h-full
           !max-w-full
           overscroll-contain
-          pb-10
-          backdrop-blur-sm
-          bg-background/70
-          px-0 lg:p-10 py-10
           overflow-auto
           rounded-none sm:rounded-lg
           `,
         )}
       >
-        <div className='px-4'>
-          <ServiceRequest />
-        </div>
+        <DialogHeader>
+          <DialogTitle>Submit Your Request</DialogTitle>
+          <DialogDescription>
+            Please fill out the form below to submit your request.
+          </DialogDescription>
+        </DialogHeader>
+
+        <ServiceRequest />
       </DialogContent>
     </Dialog>
   )

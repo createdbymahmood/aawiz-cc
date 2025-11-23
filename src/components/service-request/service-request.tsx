@@ -1,7 +1,7 @@
 import {zodResolver} from '@hookform/resolvers/zod'
 import {pick} from 'lodash-es'
-import {Mail, Phone} from 'lucide-react'
 import {FormProvider, useForm} from 'react-hook-form'
+import {toast} from 'sonner'
 import {z} from 'zod'
 
 import type {PhoneNumberInputProps} from '@/components/shared/phone-number-input'
@@ -10,41 +10,9 @@ import {FormCheckbox} from '@/components/form/form-checkbox'
 import {FormPhoneNumberInput} from '@/components/form/form-phone-number-input'
 import {FormTextArea} from '@/components/form/form-text-area'
 import {FormTextInput} from '@/components/form/form-text-input'
+import {useServiceRequestDialogState} from '@/components/service-request/service-request-dialog'
 import {Button} from '@/components/ui/button'
-import {DialogTitle} from '@/components/ui/dialog'
-import {EMAIL, PHONE_NUMBER} from '@/constants/info'
 import {phoneNumberSchema} from '@/lib/utils'
-
-const ContactInfoDesktop = () => {
-  return (
-    <div className='flex flex-col gap-10 mt-5 md:mt-32'>
-      <div className='flex flex-col gap-2 md:gap-4 items-start'>
-        <div className='flex size-11 items-center justify-center rounded-full bg-background shadow-md'>
-          <Phone className='size-6' />
-        </div>
-
-        <p className='text-base font-semibold'>Call us</p>
-        <p className='text-muted-foreground'>
-          We're available Mon-Fri, 9am-5pm.
-        </p>
-
-        <span className='text-base font-semibold'>{PHONE_NUMBER}</span>
-      </div>
-
-      <div className='flex flex-col gap-2 md:gap-4 items-start'>
-        <div className='flex size-11 items-center justify-center rounded-full bg-background shadow-md'>
-          <Mail className='size-6' />
-        </div>
-
-        <p className='text-base font-semibold'>Email us</p>
-        <p className='text-muted-foreground'>Our team is ready to assist.</p>
-        <a className='text-base font-semibold' href={`mailto:${EMAIL}`}>
-          {EMAIL}
-        </a>
-      </div>
-    </div>
-  )
-}
 
 const formSchema = z.object({
   fullName: z.string().min(1, 'Name is required'),
@@ -74,16 +42,18 @@ const ServiceRequestForm: React.FC = () => {
     defaultValues,
   })
 
+  const {close} = useServiceRequestDialogState()
+
   const onSubmit = async (data: ServiceRequestFormValues) => {
     const args = {
       ...pick(data, 'fullName', 'email', 'phoneNumber', 'address', 'message'),
     }
-
-    console.log(args)
+    toast.success('Request submitted successfully')
+    close()
   }
 
   return (
-    <div className='rounded-2xl md:rounded-3xl bg-background p-5 lg:p-10'>
+    <div className='rounded-2xl md:rounded-3xl bg-background'>
       <FormProvider {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)}>
           <div className='flex flex-col gap-6'>
@@ -144,26 +114,8 @@ const ServiceRequestForm: React.FC = () => {
 
 export const ServiceRequest: React.FC = () => {
   return (
-    <div className='grid md:grid-cols-2 gap-10 size-full overflow-auto'>
-      <div className='flex flex-col'>
-        <DialogTitle className='text-3xl md:text-5xl font-semibold text-primary'>
-          Service Request
-        </DialogTitle>
-
-        <span className='mt-8 md:mb-5'>
-          Fill out the form below to request our construction services. Our team
-          will review your request and get back to you within 1–2 business days.
-        </span>
-        <div className='hidden md:block'>
-          <ContactInfoDesktop />
-        </div>
-      </div>
-
+    <div className='size-full overflow-auto'>
       <ServiceRequestForm />
-
-      <div className='block md:hidden'>
-        <ContactInfoDesktop />
-      </div>
     </div>
   )
 }
