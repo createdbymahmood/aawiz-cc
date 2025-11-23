@@ -3,7 +3,6 @@ import type {NextConfigComplete} from 'next/dist/server/config-shared.d.ts'
 
 const nextConfig: NextConfig = {
   /* config options here */
-  output: 'export',
   trailingSlash: true,
   images: {
     unoptimized: true,
