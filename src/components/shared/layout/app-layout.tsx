@@ -10,6 +10,7 @@ export const AppLayout: React.FC<AppLayoutProps> = ({children}) => {
   return (
     <div className='flex flex-col gap-5 py-5'>
       <ServiceRequestDialog />
+
       <Header />
       <Container>{children}</Container>
     </div>

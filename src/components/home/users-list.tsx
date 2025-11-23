@@ -12,6 +12,7 @@ import {
   CardTitle,
 } from '@/components/ui/card'
 import {useGetUsersSuspense} from '@/data-provider/api/users'
+import {withSuspense} from '@/lib/with-suspense'
 
 interface UsersListCardProps {
   user: User
@@ -32,7 +33,7 @@ const UsersListCard: React.FC<UsersListCardProps> = ({user}) => {
   )
 }
 
-export const UsersList = () => {
+const UsersListImpl = () => {
   const {data: users} = useGetUsersSuspense()
 
   const content = (() => {
@@ -51,3 +52,5 @@ export const UsersList = () => {
 
   return content
 }
+
+export const UsersList = withSuspense(UsersListImpl)

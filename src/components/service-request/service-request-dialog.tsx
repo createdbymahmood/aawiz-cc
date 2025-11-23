@@ -13,6 +13,7 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog'
 import {cn} from '@/lib/utils'
+import {withSuspense} from '@/lib/with-suspense'
 
 import {ServiceRequest} from './service-request'
 
@@ -51,7 +52,7 @@ export const ServiceRequestDialogButtonWrapper: React.FC<
   )
 }
 
-export function ServiceRequestDialog() {
+function ServiceRequestDialogImpl() {
   const {isOpen, close} = useServiceRequestDialogState()
   return (
     <Dialog onOpenChange={close} open={isOpen}>
@@ -83,3 +84,4 @@ export function ServiceRequestDialog() {
     </Dialog>
   )
 }
+export const ServiceRequestDialog = withSuspense(ServiceRequestDialogImpl)

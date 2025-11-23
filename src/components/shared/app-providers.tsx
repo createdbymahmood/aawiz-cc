@@ -57,14 +57,12 @@ export interface AppProvidersProps {
 export const AppProviders = React.memo(({children}: AppProvidersProps) => {
   return (
     <NextThemesProvider attribute='class' disableTransitionOnChange>
-      <React.Suspense>
-        <NuqsAdapter>
-          <Toaster />
-          <ReactQueryProviders>
-            <AppLayout>{children}</AppLayout>
-          </ReactQueryProviders>
-        </NuqsAdapter>
-      </React.Suspense>
+      <NuqsAdapter>
+        <Toaster />
+        <ReactQueryProviders>
+          <AppLayout>{children}</AppLayout>
+        </ReactQueryProviders>
+      </NuqsAdapter>
     </NextThemesProvider>
   )
 })
