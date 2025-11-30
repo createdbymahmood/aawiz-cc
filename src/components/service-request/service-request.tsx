@@ -113,9 +113,5 @@ const ServiceRequestForm: React.FC = () => {
 }
 
 export const ServiceRequest: React.FC = () => {
-  return (
-    <div className='size-full overflow-auto'>
-      <ServiceRequestForm />
-    </div>
-  )
+  return <ServiceRequestForm />
 }

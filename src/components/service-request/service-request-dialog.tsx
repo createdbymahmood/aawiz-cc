@@ -61,16 +61,19 @@ function ServiceRequestDialogImpl() {
           event.preventDefault()
         }}
         onWheel={(e) => e.stopPropagation()}
-        className={cn(
-          `
+        className={cn(`
+          size-full
           sm:w-lg
-          w-full
+          sm:h-fit
           !max-w-full
           overscroll-contain
           overflow-auto
-          rounded-none sm:rounded-lg
-          `,
-        )}
+          rounded-none
+          sm:rounded-lg
+          flex
+          flex-col
+          gap-10
+          `)}
       >
         <DialogHeader>
           <DialogTitle>Submit Your Request</DialogTitle>
